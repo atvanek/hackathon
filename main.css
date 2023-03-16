@@ -1,5 +1,9 @@
 #pop-up {
-      width: 300px;
-      height: 200px;
-      background-color: rgba(38, 38, 168, 0.523);
+      width: 200px;
+      height: fit-content;
+      background-color: cadetblue;
+      position: absolute;
+      display: none;
+      padding-left: 15px;
+      padding-right: 15px;
 }

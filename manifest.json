@@ -1,0 +1,12 @@
+{
+	"manifest_version": 3,
+	"name": "Zime",
+	"version": "1.0",
+	"description": "Time zones at the click of a mouse.",
+	"content_scripts": [
+		{
+			"matches": ["<all_urls>"],
+			"js": ["./main.js"]
+		}
+	]
+}
