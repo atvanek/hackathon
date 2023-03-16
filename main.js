@@ -11,29 +11,30 @@ mainDiv.style.width = "200px";
 mainDiv.style.height = "fit-content";
 mainDiv.style.backgroundColor = "cadetblue";
 mainDiv.style.zIndex = "-1000";
+mainDiv.style.paddingTop = "15px";
 mainDiv.style.paddingLeft = "15px";
 mainDiv.style.paddingRight = "15px";
 mainDiv.style.borderRadius = "5px";
 mainDiv.style.transition = "opacity .5s";
 mainDiv.innerHTML = `
-<div class="tz" id="pacific">
+<div class="tz" id="pacific" style="color:black">
       <h3><img src='https://cdn-icons-png.flaticon.com/512/2311/2311489.png' style='margin-right: 10px' alt="some file"  height='20'
       width='20'/>Pacific</h3>
       
 </div>
-<div class="tz" id="mountain">
+<div class="tz" id="mountain" style="color:black">
 
       <h3><img src='https://cdn-icons-png.flaticon.com/512/281/281517.png' style='margin-right: 10px' alt="some file"  height='20'
       width='20'/>Mountain</h3>
       
       
 </div>
-<div class="tz" id="central">
+<div class="tz" id="central" style="color:black">
       <h3> <img src='https://cdn-icons-png.flaticon.com/512/1470/1470590.png' style='margin-right: 10px' alt="some file"  height='20'
       width='20'/>Central</h3>
 	 
 </div>
-<div class="tz" id="eastern">
+<div class="tz" id="eastern" style="color:black">
       <h3><img src='https://cdn-icons-png.flaticon.com/512/166/166032.png' style='margin-right: 10px' alt="some file"  height='20'
       width='20'/>Eastern</h3>
 	  
@@ -84,10 +85,11 @@ function getTime(e) {
 		}
 		console.log(hour);
 		console.log(minutes);
+		//capture current time
 		const date = new Date();
 		const timeZones = ["pacific", "mountain", "central", "eastern"];
+		//determines user's current time zone
 		const offset = date.getTimezoneOffset() / 60;
-
 		console.log("hour is", hour);
 		console.log("my offset is", date.getTimezoneOffset() / 60);
 
@@ -99,6 +101,7 @@ function getTime(e) {
 			if (oldTime !== null) {
 				oldTime.remove();
 			}
+
 			let currentHour;
 			let currentMinutes;
 
@@ -122,16 +125,16 @@ function getTime(e) {
 			const timeNode = document.createElement("p");
 			timeNode.setAttribute("id", `p-${zone}`);
 			timeNode.innerText = `${currentHour}:${currentMinutes}`;
+			timeNode.style.color = "black";
 			zoneDiv.appendChild(timeNode);
 		});
 		console.log(e);
 		const xCoord = e.pageX;
 		const yCoord = e.pageY;
-
 		const popUp = document.getElementById("pop-up");
 		popUp.style.top = yCoord + "px";
 		popUp.style.left = xCoord + "px";
-		popUp.style.opacity = "1";
+		popUp.style.opacity = ".9";
 		popUp.style.zIndex = "1000";
 		limit = setTimeout(() => {
 			popUp.style.opacity = "0";
