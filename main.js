@@ -45,6 +45,11 @@ window.addEventListener("mouseup", (e) => {
 	getTime(e);
 });
 
+window.addEventListener("mousedown", () => {
+	mainDiv.style.opacity = "0";
+	mainDiv.style.zIndex = "-1000";
+});
+
 //globally accessible setTimeout ID
 let limit;
 
@@ -84,6 +89,7 @@ function getTime(e) {
 			hour = selection.slice(0, selection.indexOf(":"));
 			minutes = selection.slice(selection.indexOf(":") + 1);
 		}
+		minutes = minutes.toLowerCase();
 		//capture current time
 		const date = new Date();
 		const timeZones = ["pacific", "mountain", "central", "eastern"];
