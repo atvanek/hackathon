@@ -44,15 +44,24 @@ window.addEventListener("mouseup", (e) => {
 	getTime(e);
 });
 
+let limit;
+
 function getTime(e) {
+	//capture user selection
 	const selection = window.getSelection().toString();
+	//only display pop-up if user selection is between 2-8 characters
 	if (selection.length >= 2 && selection.length <= 8) {
 		let hour;
 		let minutes;
+		if (limit !== undefined) {
+			clearTimeout(limit);
+		}
+
 		//if selection has no colon
 		if (selection.indexOf(":") === -1) {
 			//if selection has no space and no colon
 			if (selection.indexOf(" ") === -1) {
+				//finding value of 1st letter in selection, will be either 'a', 'p', or not exist
 				const letter = /[a-z]/i;
 				const found = selection.match(letter);
 				console.log(`found`, found[0]);
@@ -90,7 +99,6 @@ function getTime(e) {
 			if (oldTime !== null) {
 				oldTime.remove();
 			}
-
 			let currentHour;
 			let currentMinutes;
 
@@ -105,6 +113,9 @@ function getTime(e) {
 				currentHour = Number(hour) + initialOffset;
 				currentMinutes = minutes;
 			}
+			if (currentHour > 12) {
+				currentHour -= 12;
+			}
 			// if true, swtich all a to p and ps to as
 			// obj[zone] = currentHour;
 			initialOffset++;
@@ -114,15 +125,15 @@ function getTime(e) {
 			zoneDiv.appendChild(timeNode);
 		});
 		console.log(e);
-		const xCoord = e.clientX;
-		const yCoord = e.clientY;
+		const xCoord = e.pageX;
+		const yCoord = e.pageY;
 
 		const popUp = document.getElementById("pop-up");
 		popUp.style.top = yCoord + "px";
 		popUp.style.left = xCoord + "px";
 		popUp.style.opacity = "1";
 		popUp.style.zIndex = "1000";
-		setTimeout(() => {
+		limit = setTimeout(() => {
 			popUp.style.opacity = "0";
 			popUp.style.zIndex = "-1000";
 		}, 4000);
