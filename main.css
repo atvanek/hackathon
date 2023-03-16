@@ -1,7 +1,7 @@
 #pop-up {
       width: 200px;
       height: fit-content;
-      background-color: cadetblue;
+      background-color: rgb(31, 60, 61);
       position: absolute;
       display: none;
       padding-left: 15px;
