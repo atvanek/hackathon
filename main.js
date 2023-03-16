@@ -7,9 +7,7 @@ mainDiv.style.width = "200px";
 mainDiv.style.height = "fit-content";
 mainDiv.style.backgroundColor = "cadetblue";
 mainDiv.style.zIndex = "-1000";
-mainDiv.style.paddingTop = "15px";
-mainDiv.style.paddingLeft = "15px";
-mainDiv.style.paddingRight = "15px";
+mainDiv.style.padding = "15px";
 mainDiv.style.borderRadius = "5px";
 mainDiv.style.transition = "opacity .5s";
 //setting inner HTML of pop-up, including header for each time zone
