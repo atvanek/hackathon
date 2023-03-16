@@ -1,8 +1,4 @@
-//the event of mousedown would be the beginning
-//whenever the mouse is released
-//then run window.getSelection
-//add a mousedown eventlistener the window
-
+//creating and styling main pop-up div
 const mainDiv = document.createElement("div");
 mainDiv.setAttribute("id", "pop-up");
 mainDiv.style.position = "absolute";
@@ -16,6 +12,7 @@ mainDiv.style.paddingLeft = "15px";
 mainDiv.style.paddingRight = "15px";
 mainDiv.style.borderRadius = "5px";
 mainDiv.style.transition = "opacity .5s";
+//setting inner HTML of pop-up, including header for each time zone
 mainDiv.innerHTML = `
 <div class="tz" id="pacific" style="color:black">
       <h3><img src='https://cdn-icons-png.flaticon.com/512/2311/2311489.png' style='margin-right: 10px' alt="some file"  height='20'
@@ -39,12 +36,16 @@ mainDiv.innerHTML = `
       width='20'/>Eastern</h3>
 	  
 </div>`;
+
+//add pop-up to body with opacity of 0 and z-index of -1000
 document.body.prepend(mainDiv);
 
+//function will trigger on mouseup event
 window.addEventListener("mouseup", (e) => {
 	getTime(e);
 });
 
+//globally accessible setTimeout ID
 let limit;
 
 function getTime(e) {
@@ -54,10 +55,10 @@ function getTime(e) {
 	if (selection.length >= 2 && selection.length <= 8) {
 		let hour;
 		let minutes;
+		//if there is already a setTimeout in callback queue, delete it
 		if (limit !== undefined) {
 			clearTimeout(limit);
 		}
-
 		//if selection has no colon
 		if (selection.indexOf(":") === -1) {
 			//if selection has no space and no colon
@@ -83,28 +84,23 @@ function getTime(e) {
 			hour = selection.slice(0, selection.indexOf(":"));
 			minutes = selection.slice(selection.indexOf(":") + 1);
 		}
-		console.log(hour);
-		console.log(minutes);
 		//capture current time
 		const date = new Date();
 		const timeZones = ["pacific", "mountain", "central", "eastern"];
-		//determines user's current time zone
+		//determines user's current time zone from UTC in hours
 		const offset = date.getTimezoneOffset() / 60;
-		console.log("hour is", hour);
-		console.log("my offset is", date.getTimezoneOffset() / 60);
-
 		let initialOffset = offset - 7;
+		//loop through all zones, adding offset bases on current time zone
 		timeZones.forEach((zone) => {
 			const zoneDiv = document.getElementById(zone);
 			const oldTime = document.getElementById(`p-${zone}`);
-
+			//removes old time if it exists
 			if (oldTime !== null) {
 				oldTime.remove();
 			}
-
 			let currentHour;
 			let currentMinutes;
-
+			//logic for converting am to pm
 			if (Number(hour) + initialOffset < 1) {
 				currentHour = Number(hour) + initialOffset + 12;
 				if (minutes.indexOf("a") === -1 && currentHour !== 12) {
@@ -116,26 +112,29 @@ function getTime(e) {
 				currentHour = Number(hour) + initialOffset;
 				currentMinutes = minutes;
 			}
+			//logic for converting military time to 12-hr time
 			if (currentHour > 12) {
 				currentHour -= 12;
 			}
-			// if true, swtich all a to p and ps to as
-			// obj[zone] = currentHour;
 			initialOffset++;
+			//creating new p elementing and adding to pop-up
 			const timeNode = document.createElement("p");
 			timeNode.setAttribute("id", `p-${zone}`);
 			timeNode.innerText = `${currentHour}:${currentMinutes}`;
 			timeNode.style.color = "black";
 			zoneDiv.appendChild(timeNode);
 		});
-		console.log(e);
+		//captures current position of mouse at time of mouse-up event
 		const xCoord = e.pageX;
 		const yCoord = e.pageY;
 		const popUp = document.getElementById("pop-up");
+		//changes position of pop-up to current position of mouse
 		popUp.style.top = yCoord + "px";
 		popUp.style.left = xCoord + "px";
+		//makes pop-up visible and brings it to the front of the document
 		popUp.style.opacity = ".9";
 		popUp.style.zIndex = "1000";
+		//hides pop-up after 4 seconds
 		limit = setTimeout(() => {
 			popUp.style.opacity = "0";
 			popUp.style.zIndex = "-1000";
